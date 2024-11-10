@@ -112,11 +112,20 @@ class User {
     }
 
     buildQueryValidate() {
-        // Implementación del método build (vacío, según solicitado)
+        return this.queryRegister.replace('{0}', `"${this.username}"`).replace('{1}', `"${this.email}"`);
     }
 
     buildQueryRegister() {
-        return this.queryRegister.replace('{0}', `"${this.username}"`).replace('{1}', `"${this.email}"`).replace('{2}', `"${this.email}"`);
+        return this.queryRegister
+            .replace('{0}', `"${this.username}"`)
+            .replace('{1}', `"${this.email}"`)
+            .replace('{2}', `"${this.contrasena}"`)
+            .replace('{3}', `"${this.nombres}"`)
+            .replace('{4}', `"${this.apellidos}"`)
+            .replace('{5}', `"${this.direccion}"`)
+            .replace('{6}', `"${this.telefono}"`)
+            .replace('{7}', `"${this.fechaNacimiento}"`)
+            .replace('{8}', `"${this.tipo_rol}"`);
     }
     buildQueryLogin() {
         return this.queryLogin.replace('{0}', `"${this.email}"`).replace('{1}', `"${this.password}"`);
