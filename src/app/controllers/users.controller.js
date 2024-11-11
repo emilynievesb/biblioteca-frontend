@@ -48,10 +48,14 @@ const login = async (data) => {
     user.setCorreoElectronico(email);
     user.setContrasena(password);
     let query = user.buildQueryLogin();
-    console.log(query);
+    //console.log(query);
 
     let response = await userFacade.fetchPost(query);
-    console.log(response);
+    if(response.errors) return { err: 'Usuario o contraseña incorrectos' }
+
+    const token = response.data.login.jwt
+    document.cookie = `token=${token}; path=/; max-age=3600;`;
+    return { success: 'ok' }
 };
 
 export { login };
