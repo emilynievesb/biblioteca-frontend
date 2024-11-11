@@ -38,7 +38,7 @@ class ApiService {
 }
 
 // Crear una única instancia de ApiService con la URL base de Strapi
-const apiService = new ApiService(process.env.API_URL);
+const apiService = new ApiService(process.env.NEXT_PUBLIC_API_URL);
 Object.freeze(apiService); // Asegura que la instancia sea inmutable
 
 export default apiService;
