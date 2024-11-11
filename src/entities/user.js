@@ -31,17 +31,12 @@ class User {
         `;
         this.queryRegister = `
         mutation {
-        registerUser(
+        register(
+        input:{
             username: {0}
             email: {1}
             password: {2}
-            nombres: {3}
-            apellidos: {4}
-            direccion: {5}
-            telefono: {6}
-            fechaNacimiento: {7}
-            tipo_rol: {8}
-        ) {
+    }) {
             user {
             id
             username
@@ -50,7 +45,38 @@ class User {
             jwt
         }
         }
-
+        `;
+        this.queryRegisterUsuario = `
+        mutation {
+    createUsuario(
+        data: {
+            nombres: {0}
+            apellidos: {1}
+            direccion: {2}
+            telefono: {3}
+            fechaNacimiento: {4}
+            tipo_rol: {5}
+        }
+    ) {
+        data {
+        id
+        attributes {
+            firstName
+            lastName
+            phone
+            user {
+            data {
+                id
+                attributes {
+                username
+                email
+                }
+            }
+            }
+        }
+        }
+    }
+    }
         `;
         this.queryLogin = `
           mutation {
@@ -116,16 +142,16 @@ class User {
     }
 
     buildQueryRegister() {
+        return this.queryRegister.replace('{0}', `"${this.nomUsuario}"`).replace('{1}', `"${this.correoElectronico}"`).replace('{2}', `"${this.contrasena}"`);
+    }
+    buildQueryRegisterUser() {
         return this.queryRegister
-            .replace('{0}', `"${this.nomUsuario}"`)
-            .replace('{1}', `"${this.correoElectronico}"`)
-            .replace('{2}', `"${this.contrasena}"`)
-            .replace('{3}', `"${this.nombres}"`)
-            .replace('{4}', `"${this.apellidos}"`)
-            .replace('{5}', `"${this.direccion}"`)
-            .replace('{6}', `"${this.telefono}"`)
-            .replace('{7}', `"${this.fechaNacimiento}"`)
-            .replace('{8}', `"${this.tipo_rol}"`);
+            .replace('{0}', `"${this.nombres}"`)
+            .replace('{1}', `"${this.apellidos}"`)
+            .replace('{2}', `"${this.direccion}"`)
+            .replace('{3}', `"${this.telefono}"`)
+            .replace('{4}', `"${this.apellifechaNacimientodos}"`)
+            .replace('{5}', `"${this.tipo_rol}"`);
     }
     buildQueryLogin() {
         return this.queryLogin.replace('{0}', `"${this.correoElectronico}"`).replace('{1}', `"${this.contrasena}"`);
