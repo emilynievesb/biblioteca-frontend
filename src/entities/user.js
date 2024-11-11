@@ -161,7 +161,7 @@ class User {
             .replace('{4}', `"${this.fechaNacimiento}"`)
             .replace('{5}', `"${this.tipo_rol}"`)
             .replace('{6}', `"${this.id}"`)
-            .replace('{7}', `"${new Date().toISOString().split('T')[0]}"`);
+            .replace('{7}', `"${new Date().toISOString()}"`);
     }
     buildQueryLogin() {
         return this.queryLogin.replace('{0}', `"${this.correoElectronico}"`).replace('{1}', `"${this.contrasena}"`);
