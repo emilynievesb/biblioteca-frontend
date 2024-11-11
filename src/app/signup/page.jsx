@@ -1,14 +1,28 @@
 'use client';
 import Link from 'next/link';
 import { UserPlus } from 'lucide-react';
+import Swal from 'sweetalert2'
 import Footer from '../Footer';
 import SignUpForm from './SignUpForm';
 import singup from '../controllers/users.controller';
 
-const Login = () => {
+const SignUp = () => {
     async function onSubmit(data) {
         const res = await singup(data);
-        console.log(res);
+        if (res.error)
+            return Swal.fire({
+                title: "Error",
+                text: res.error,
+                icon: "error"
+            })
+        Swal.fire({
+            title: "Registro exitoso",
+            text: `Bienvenido ${res.success.nombres}`,
+            icon: "success"
+        }).then(() =>{
+            window.location.href = '/librarian'
+        });
+
     }
 
     return (
@@ -31,4 +45,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;
