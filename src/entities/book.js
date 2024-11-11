@@ -10,7 +10,6 @@ class Book {
     libro_localidads;
 
     constructor() {
-
         this.queryRegister = `mutation {
             createLibro(input: {
                 data: {
@@ -32,9 +31,6 @@ class Book {
                 autors: {
                     connect: {7} //[ {id: "1"}, {id: "2"} ]
                 },
-                libro_localidads: {
-                    connect: {8} //[ {id: "1"}, {id: "2"} ]
-                }
                 }
             }) {
                 data {
@@ -55,10 +51,6 @@ class Book {
                 autors {
                     id
                     name
-                }
-                libro_localidads {
-                    id
-                    location
                 }
                 }
             }
@@ -92,42 +84,42 @@ class Book {
 
     setIsbn(isbn) {
         this.isbn = isbn;
-        return
+        return;
     }
 
     setTitulo(titulo) {
         this.titulo = titulo;
-        return
+        return;
     }
 
     setEditorial(editorial) {
         this.editorial = editorial;
-        return
+        return;
     }
 
     setIdioma(idioma) {
         this.idioma = idioma;
-        return
+        return;
     }
 
     setEdicion(edicion) {
         this.edicion = edicion;
-        return
+        return;
     }
 
     setCategoria(categoria) {
         this.categoria = categoria;
-        return
+        return;
     }
 
     setResumen(resumen) {
         this.resumen = resumen;
-        return
+        return;
     }
 
     setAutors(autors) {
         this.autors = autors;
-        return
+        return;
     }
 
     buildQueryRegister() {
@@ -139,11 +131,12 @@ class Book {
             .replace('{4}', `"${this.edicion}"`)
             .replace('{5}', `"${this.categoria}"`)
             .replace('{6}', `"${this.resumen}"`)
-            .replace('{7}', `"${this.autors}"`)
-            .replace('{8}', `"${this.libro_localidads}"`);
+            .replace('{7}', `"${this.autors}"`);
+        // .replace('{8}', `"${this.libro_localidads}"`);
     }
 
-    buildQueryFetchAll(){
+    buildQueryFetchAll() {
         return this.queryFetchAll;
     }
 }
+export default Book;
