@@ -1,60 +1,101 @@
-import React from 'react';
-import { Search } from 'lucide-react';
+'use client'
+
+import React, { useState } from 'react'
+import { Search } from 'lucide-react'
+import Modal from './Modal';
+
 
 const InventoryManagement = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [newBook, setNewBook] = useState({
+        isbn: '',
+        title: '',
+        author: '',
+        publisher: '',
+        language: '',
+        year: '',
+        categories: '',
+        summary: ''
+    })
 
     const data = [
-        { isbn: "9780307474728", title: "Cien años de soledad", author: "Gabriel García Márquez", publisher: "Editorial Sudamericana", language: "Español", year: "1967", edition: "5", categories: "Drama, Realismo mágico", existenses: "69" },
+        { isbn: "9780307474728", title: "Cien años de soledad", author: "Gabriel García Márquez", publisher: "Editorial Sudamericana", language: "Español", year: "1967", edition: "5", categories: "Drama, Realismo mágico" },
     ]
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target
+        setNewBook(prevBook => ({
+            ...prevBook,
+            [name]: value
+        }))
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log('Nuevo libro:', newBook)
+        setIsModalOpen(false)
+    }
+
     return (
-        <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-4 flex items-center">
-                <Search className="mr-2" />
+        <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '0.5rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem', display: 'flex', alignItems: 'center' }}>
+                <Search style={{ marginRight: '0.5rem' }} />
                 Inventario
             </h2>
-            <div className="mb-4">
-                <input type="text" placeholder="Buscar libros..." className="w-full px-3 py-2 border rounded-md" />
+            <div style={{ marginBottom: '1rem' }}>
+                <input type="text" placeholder="Buscar libros..." style={{ width: '100%', padding: '0.5rem', border: '1px solid #ccc', borderRadius: '0.25rem' }} />
             </div>
-            <table className="w-full">
-                <thead>
-                    <tr className="bg-gray-100">
-                        <th className="p-2 text-left">ISBN</th>
-                        <th className="p-2 text-left">Título</th>
-                        <th className="p-2 text-left">Autor</th>
-                        <th className="p-2 text-left">Editorial</th>
-                        <th className="p-2 text-left">Idioma</th>
-                        <th className="p-2 text-left">Año</th>
-                        <th className="p-2 text-left">Edición</th>
-                        <th className="p-2 text-left">Categorías</th>
-                        <th className="p-2 text-left">Existencias</th>
-                        <th className="p-2 text-left">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map(book => (
-                        <tr key={book.isbn}>
-                            <td className="p-2">{book.isbn}</td>
-                            <td className="p-2">{book.title}</td>
-                            <td className="p-2">{book.author}</td>
-                            <td className="p-2">{book.publisher}</td>
-                            <td className="p-2">{book.language}</td>
-                            <td className="p-2">{book.year}</td>
-                            <td className="p-2">{book.edition}</td>
-                            <td className="p-2">{book.categories}</td>
-                            <td className="p-2">{book.existenses}</td>
-                            <td className="p-2">
-                                <button className="text-blue-600 hover:underline mr-2">Editar</button>
-                            </td>
+            <div style={{ overflowX: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                    <thead>
+                        <tr className="bg-gray-100">
+                            <th className="p-2 text-left">ISBN</th>
+                            <th className="p-2 text-left">Título</th>
+                            <th className="p-2 text-left">Autor</th>
+                            <th className="p-2 text-left">Editorial</th>
+                            <th className="p-2 text-left">Idioma</th>
+                            <th className="p-2 text-left">Año</th>
+                            <th className="p-2 text-left">Edición</th>
+                            <th className="p-2 text-left">Categorías</th>
+                            <th className="p-2 text-left">Acciones</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-            <button className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-                Agregar Libro
-            </button>
-        </div>
-    );
-};
+                    </thead>
+                    <tbody>
+                        {data.map(book => (
+                            <tr key={book.isbn}>
+                                <td className="p-2 text-left">{book.isbn}</td>
+                                <td className="p-2 text-left">{book.title}</td>
+                                <td className="p-2 text-left">{book.author}</td>
+                                <td className="p-2 text-left">{book.publisher}</td>
+                                <td className="p-2 text-left">{book.language}</td>
+                                <td className="p-2 text-left">{book.year}</td>
+                                <td className="p-2 text-left">{book.edition}</td>
+                                <td className="p-2 text-left">{book.categories}</td>
+                                <td className="p-2 text-left">
+                                    <button className='text-blue-600 hover:underline mr-2'>Editar</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
-export default InventoryManagement;
+            <button
+                onClick={() => setIsModalOpen(true)}
+                className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 "
+            >
+            Agregar Libro
+            </button>
+
+            <Modal 
+                isOpen={isModalOpen} 
+                onClose={() => setIsModalOpen(false)} 
+                onSubmit={handleSubmit} 
+                newBook={newBook} 
+                handleInputChange={handleInputChange} 
+            />
+        </div>
+    )
+}
+
+export default InventoryManagement
