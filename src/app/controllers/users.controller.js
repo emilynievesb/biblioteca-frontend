@@ -34,4 +34,22 @@ const singup = async (data) => {
         return 'Ya existe el nombre de usuario o el email en la base de datos';
     }
 };
+
 export default singup;
+
+const login = async (data) => {
+    const user = new User();
+    const userFacade = new UsersFacade();
+
+    const { email, password } = data;
+
+    user.setCorreoElectronico(email);
+    user.setContrasena(password);
+    let query = user.buildQueryLogin();
+    console.log(query);
+
+    let response = await userFacade.fetchPost(query);
+    console.log(response);
+};
+
+export { login };
