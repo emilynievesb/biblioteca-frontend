@@ -79,7 +79,7 @@ export default function SignUpForm({ onSubmit }) {
                     type="number"
                     register={register('year', { 
                         required: 'El año de nacimiento es requerido',
-                        max: { value: 2024, message: 'El día no puede ser mayor a 31' }
+                        max: { value: 2024, message: 'El año no puede ser mayor a 2025' }
                      })}
                     error={errors.year}
                 />

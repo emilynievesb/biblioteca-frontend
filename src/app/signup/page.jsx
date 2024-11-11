@@ -1,16 +1,35 @@
 'use client';
-import { useRouter } from 'next/navigation';
-import { UserPlus } from 'lucide-react';
 import Link from 'next/link';
+import { UserPlus } from 'lucide-react';
 import Footer from '../Footer';
 import SignUpForm from './SignUpForm';
+import User from "../../entities/user";
+import UsersFacade from '../../services/user.facade';
 
 
 
 const Login = () => {
 
-    function onSubmit(data) {
-        console.log(data);
+    async function onSubmit(data) {
+        const user = new User();
+        const userFacade = new UsersFacade();
+
+        const {name, surname, address, phone, email, day, month, year, username, password} = data;
+        user.setNombres(name);
+        user.setApellidos(surname);
+        user.setDireccion(address);
+        user.setTelefono(phone);
+        user.setCorreoElectronico(email);
+        user.setFechaNacimiento(`${day}/${month}/${year}`);
+        user.setNomUsuario(username);
+        user.setContrasena(password);
+        user.setRol("usuario");
+
+        let query = user.buildQueryRegister();
+        console.log(query);
+
+        // let response = await userFacade.registrarUsuario(query);
+        // console.log(response);
     }
 
     return(
