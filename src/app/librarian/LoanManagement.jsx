@@ -1,19 +1,32 @@
 "use client"
 
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState } from 'react';
 import { BookOpen } from 'lucide-react';
+import SearchBoardsPage from './SearchBoardsPage';
 
 const LoanManagement = () => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const [user, setUser] = useState('');
+    const [book, setBook] = useState('');
+
+    const onSubmit = (event) => {
+        event.preventDefault();
+        console.log(user, book);
     };
+
+    const usersList = [
+        { id: 1, title: 'Autor A', author: 'Juan Pérez' },
+        { id: 2, title: 'Autor B', author: 'María López' },
+        { id: 3, title: 'Autor C', author: 'María López' },
+        { id: 4, title: 'Autor D', author: 'María López' },
+    ]
+
+    const bookList = [
+        { id: 1, title: 'Libro A', author: 'Juan Pérez' },
+        { id: 2, title: 'Libro B', author: 'Juan Pérez' },
+        { id: 3, title: 'Libro C', author: 'Juan Pérez' },
+        { id: 4, title: 'Libro D', author: 'Juan Pérez' },
+    ]
 
     return (
         <article className="bg-white p-6 rounded-lg shadow-md">
@@ -21,31 +34,14 @@ const LoanManagement = () => {
                 <BookOpen className="mr-2" />
                 Gestión de Préstamos y Devoluciones
             </h2>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                <div>
-                    <label htmlFor="user" className="block mb-1">Usuario</label>
-                    <input
-                        type="text"
-                        id="user"
-                        {...register('user', { required: 'El usuario es obligatorio' })}
-                        className="w-full px-3 py-2 border rounded-md"
-                    />
-                    {errors.user && <p className="text-red-500 text-sm">{errors.user.message}</p>}
-                </div>
-                <div>
-                    <label htmlFor="book" className="block mb-1">Libro</label>
-                    <input
-                        type="text"
-                        id="book"
-                        {...register('book', { required: 'El libro es obligatorio' })}
-                        className="w-full px-3 py-2 border rounded-md"
-                    />
-                    {errors.book && <p className="text-red-500 text-sm">{errors.book.message}</p>}
-                </div>
+            <form className="space-y-4">
+                <SearchBoardsPage items={usersList} placeholder={'Buscar usuario'} newSelected={setUser} inputLabel="Usuario"/>
+                <SearchBoardsPage items={bookList} placeholder={'Buscar libros'} newSelected={setBook} inputLabel="Libro"/>
                 <div className="space-x-4">
                     <button
                         type="submit"
                         className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                        onClick={onSubmit}
                     >
                         Iniciar Préstamo
                     </button>

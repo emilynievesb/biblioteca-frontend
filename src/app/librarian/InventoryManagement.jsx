@@ -80,19 +80,27 @@ const InventoryManagement = () => {
                 </table>
             </div>
 
-            <button
-                onClick={() => setIsModalOpen(true)}
-                className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 "
-            >
-            Agregar Libro
-            </button>
+            <div className="space-x-4">
+                <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 "
+                >
+                    Agregar Libro
+                </button>
+                <button
+                    type="submit"
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                    Iniciar Devolución
+                </button>
+            </div>
 
-            <Modal 
-                isOpen={isModalOpen} 
-                onClose={() => setIsModalOpen(false)} 
-                onSubmit={handleSubmit} 
-                newBook={newBook} 
-                handleInputChange={handleInputChange} 
+            <Modal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSubmit={handleSubmit}
+                newBook={newBook}
+                handleInputChange={handleInputChange}
             />
         </div>
     )
