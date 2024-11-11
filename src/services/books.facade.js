@@ -1,6 +1,6 @@
 import apiService from '../shared/fetch/apiService';
 
-class LibraryFacade {
+class BooksFacade {
     async buscarLibros(filtros) {
         // Construye la consulta de búsqueda usando SearchBuilder
         const query = new SearchBuilder().setAuthor(filtros.author).setGenre(filtros.genre).setAvailability(filtros.isAvailable).build();
@@ -37,6 +37,6 @@ class LibraryFacade {
 }
 
 // Exporta una instancia única (Singleton) de LibraryFacade para su uso en toda la aplicación
-const libraryFacade = new LibraryFacade();
-Object.freeze(libraryFacade);
-export default libraryFacade;
+const booksFacade = new BooksFacade();
+Object.freeze(booksFacade);
+export default booksFacade;
