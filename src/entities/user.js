@@ -97,7 +97,7 @@ class User {
     }
 
     setRol(rol) {
-        this.rol = rol;
+        this.tipo_rol = rol;
         return;
     }
 
@@ -112,13 +112,13 @@ class User {
     }
 
     buildQueryValidate() {
-        return this.queryRegister.replace('{0}', `"${this.username}"`).replace('{1}', `"${this.email}"`);
+        return this.queryRegister.replace('{0}', `"${this.nomUsuario}"`).replace('{1}', `"${this.correoElectronico}"`);
     }
 
     buildQueryRegister() {
         return this.queryRegister
-            .replace('{0}', `"${this.username}"`)
-            .replace('{1}', `"${this.email}"`)
+            .replace('{0}', `"${this.nomUsuario}"`)
+            .replace('{1}', `"${this.correoElectronico}"`)
             .replace('{2}', `"${this.contrasena}"`)
             .replace('{3}', `"${this.nombres}"`)
             .replace('{4}', `"${this.apellidos}"`)
@@ -128,7 +128,7 @@ class User {
             .replace('{8}', `"${this.tipo_rol}"`);
     }
     buildQueryLogin() {
-        return this.queryLogin.replace('{0}', `"${this.email}"`).replace('{1}', `"${this.password}"`);
+        return this.queryLogin.replace('{0}', `"${this.correoElectronico}"`).replace('{1}', `"${this.contrasena}"`);
     }
 }
 export default User;

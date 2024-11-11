@@ -5,28 +5,27 @@ class UsersFacade {
         return await apiService.fetch(`/users?filters[username][$contains]=${username}`);
     }
 
-    async validarUsuario(data) {
+    async validarUsuario(query) {
         return await apiService.fetch(`/graphql`, {
             method: 'POST',
-            body: JSON.stringify(data),
+            body: JSON.stringify(query),
         });
     }
 
-    async registrarUsuario(data) {
+    async registrarUsuario(query) {
         return await apiService.fetch('/graphql', {
             method: 'POST',
-            body: JSON.stringify(data),
+            body: JSON.stringify(query),
         });
     }
-    async loginUsuario(data) {
+    async loginUsuario(query) {
         return await apiService.fetch('/graphql', {
             method: 'POST',
-            body: JSON.stringify(data),
+            body: JSON.stringify(query),
         });
     }
 }
 
 // Exporta una instancia única (Singleton) de LibraryFacade para su uso en toda la aplicación
-const usersFacade = new UsersFacade();
-Object.freeze(usersFacade);
-export default usersFacade;
+
+export default UsersFacade;

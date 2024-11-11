@@ -1,15 +1,26 @@
 'use client';
-import { useRouter } from 'next/navigation';
-import { UserPlus } from 'lucide-react';
-import LoginForm from './LoginForm';
-import Footer from '../Footer';
 import Link from 'next/link';
+import { UserPlus } from 'lucide-react';
+import Footer from '../Footer';
+import LoginForm from './LoginForm';
+import User from "../../entities/user";
+import UsersFacade from '../../services/user.facade';
 
 const Login = () => {
-    const router = useRouter();
+    async function onSubmit(data) {
+        const user = new User();
+        const userFacade = new UsersFacade();
 
-    const onSubmit = (data) => {
-        console.log(data);
+        const {email, password} = data;
+
+        user.setCorreoElectronico(email);
+        user.setContrasena(password);
+        let query = user.buildQueryLogin();
+        console.log(query);
+
+        // let response = await userFacade.registrarUsuario(query);
+        // console.log(response);
+
     };
 
     return (
