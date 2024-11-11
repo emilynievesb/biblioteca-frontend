@@ -93,6 +93,28 @@ class User {
             }
             }
         `;
+        this.queryFetchAll = `
+            query {
+            usuarios {
+                data {
+                id
+                attributes {
+                    nombres
+                    apellidos
+                    direccion
+                    telefono
+                    fechaNacimiento
+                    tipo_rol
+                    user_id {
+                    data {
+                        id
+                    }
+                    }
+                }
+                }
+            }
+            }
+        `;
     }
 
     setId(id) {
@@ -165,6 +187,9 @@ class User {
     }
     buildQueryLogin() {
         return this.queryLogin.replace('{0}', `"${this.correoElectronico}"`).replace('{1}', `"${this.contrasena}"`);
+    }
+    buildQueryFetchAll() {
+        return this.queryFetchAll;
     }
 }
 export default User;

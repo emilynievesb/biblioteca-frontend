@@ -16,10 +16,10 @@ const singup = async (data) => {
     user.setRol('usuario');
     let queryValidate = user.buildQueryValidate();
     //console.log(queryValidate);
-    
+
     let responseValidate = await userFacade.fetchPost(queryValidate);
-    if (responseValidate.data.usersPermissionsUsers.data.length > 0) return { error: 'Ya existe el nombre de usuario o el email en la base de datos' }
-    
+    if (responseValidate.data.usersPermissionsUsers.data.length > 0) return { error: 'Ya existe el nombre de usuario o el email en la base de datos' };
+
     let queryUser = user.buildQueryRegister();
     //console.log("queryUser", queryUser);
 
@@ -29,12 +29,12 @@ const singup = async (data) => {
     //console.log("responseUser: ", responseUser);
     let queryUserInfo = user.buildQueryRegisterUser();
     //console.log(queryUserInfo);
-    let responseUsuario = await userFacade.fetchPost(queryUserInfo)
+    let responseUsuario = await userFacade.fetchPost(queryUserInfo);
 
-    const token = responseUser.data.register.jwt
+    const token = responseUser.data.register.jwt;
     document.cookie = `token=${token}; path=/; max-age=3600;`;
 
-    return { success: responseUsuario.data.createUsuario.data.attributes};
+    return { success: responseUsuario.data.createUsuario.data.attributes };
 };
 
 export default singup;
@@ -51,11 +51,18 @@ const login = async (data) => {
     //console.log(query);
 
     let response = await userFacade.fetchPost(query);
-    if(response.errors) return { err: 'Usuario o contraseña incorrectos' }
+    if (response.errors) return { err: 'Usuario o contraseña incorrectos' };
 
-    const token = response.data.login.jwt
+    const token = response.data.login.jwt;
     document.cookie = `token=${token}; path=/; max-age=3600;`;
-    return { success: 'ok' }
+    return { success: 'ok' };
+};
+const searchUsers = async () => {
+    const user = new User();
+    const queryFetchAll = user.buildQueryFetchAll();
+    const userFacade = new UsersFacade();
+    let response = await userFacade.fetchPost(queryFetchAll);
+    return response;
 };
 
-export { login };
+export { login, searchUsers };
