@@ -1,3 +1,5 @@
+"use client"
+
 export default function FormInput({ label, id, type, register, error }) {
     return (
         <div>

@@ -69,7 +69,7 @@ export default function SignUpForm({ onSubmit }) {
                     type="number"
                     register={register('month', { 
                         required: 'El mes de nacimiento es requerido',
-                        max: { value: 12, message: 'El día no puede ser mayor a 31' }
+                        max: { value: 12, message: 'El mes no puede ser mayor a 12' }
                     })}
                     error={errors.month}
                 />

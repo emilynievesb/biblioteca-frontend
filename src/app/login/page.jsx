@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { UserPlus } from 'lucide-react';
+import Swal from 'sweetalert2'
 import Footer from '../Footer';
 import LoginForm from './LoginForm';
 import { login } from '../controllers/users.controller';
@@ -8,7 +9,14 @@ import { login } from '../controllers/users.controller';
 const Login = () => {
     async function onSubmit(data) {
         const res = await login(data);
-        console.log(res);
+        if (res.err)
+            return Swal.fire({
+                title: "Error",
+                text: res.err,
+                icon: "error"
+            })
+            
+        if (res.success) window.location.href = '/librarian'
     }
 
     return (
