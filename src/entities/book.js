@@ -64,6 +64,30 @@ class Book {
             }
             }
         `;
+
+        this.queryFetchAll = `
+        query{
+            libro{
+                data{
+                    isbn
+                    titulo
+                    editorial
+                    idioma
+                    edicion
+                    categoria
+                    resumen
+                    autors{
+                        id
+                        name
+                    }
+                    libro_localidads {
+                        id
+                        location
+                    }   
+                }
+            }
+        }
+        `;
     }
 
     setIsbn(isbn) {
@@ -117,5 +141,9 @@ class Book {
             .replace('{6}', `"${this.resumen}"`)
             .replace('{7}', `"${this.autors}"`)
             .replace('{8}', `"${this.libro_localidads}"`);
+    }
+
+    buildQueryFetchAll(){
+        return this.queryFetchAll;
     }
 }
