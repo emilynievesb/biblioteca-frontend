@@ -11,56 +11,57 @@ class Book {
 
     constructor() {
         this.queryRegister = `
-        mutation {
-  createLibro(
-    data: {
-      isbn:{0} #Tipo string
-      titulo:{1},
-      editorial: {2},         # Relación con la editorial por ID tipo Number
-      idioma: {3},
-      edicion: {4},
-      categoria: {5},         # Relación con la categoría por ID tipo Number
-      resumen: {6},
-      autors: {7}           # Relación múltiple con autores, usar un array para IDs
+            mutation {
+        createLibro(
+            data: {
+            isbn:{0} #Tipo string
+            titulo:{1},
+            editorial: {2},         # Relación con la editorial por ID tipo Number
+            idioma: {3},
+            edicion: {4},
+            categoria: {5},         # Relación con la categoría por ID tipo Number
+            resumen: {6},
+            autors: {7},           # Relación múltiple con autores, usar un array para IDs
+            publishedAt:{8}
+            }
+        ) {
+            data {
+            id
+            attributes {
+                isbn
+                titulo
+                editorial {
+                data {
+                    id
+                    attributes {
+                    nombre
+                    }
+                }
+                }
+                idioma
+                edicion
+                categoria {
+                data {
+                    id
+                    attributes {
+                    nombre
+                    }
+                }
+                }
+                resumen
+                autors {
+                data {
+                    id
+                    attributes {
+                    nombre
+                    apellido
+                    }
+                }
+                }
+            }
+            }
+        }
     }
-  ) {
-    data {
-      id
-      attributes {
-        isbn
-        titulo
-        editorial {
-          data {
-            id
-            attributes {
-              nombre
-            }
-          }
-        }
-        idioma
-        edicion
-        categoria {
-          data {
-            id
-            attributes {
-              nombre
-            }
-          }
-        }
-        resumen
-        autors {
-          data {
-            id
-            attributes {
-              nombre
-              apellido
-            }
-          }
-        }
-      }
-    }
-  }
-}
 
         `;
 
@@ -138,7 +139,8 @@ class Book {
             .replace('{4}', `"${this.edicion}"`)
             .replace('{5}', `${this.categoria}`)
             .replace('{6}', `"${this.resumen}"`)
-            .replace('{7}', `${this.autors}`);
+            .replace('{7}', `${this.autors}`)
+            .replace('{8}', `"${new Date().toISOString()}"`);
         // .replace('{8}', `"${this.libro_localidads}"`);
     }
 

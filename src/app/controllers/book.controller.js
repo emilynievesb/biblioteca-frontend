@@ -18,6 +18,6 @@ const registerBook = async (data) => {
 };
 const searchBooks = async () => {
     const bookFacade = new BooksFacade();
-    return await bookFacade.obtenerLibros(queryBooks);
+    return await bookFacade.obtenerLibros();
 };
 export { searchBooks, registerBook };
