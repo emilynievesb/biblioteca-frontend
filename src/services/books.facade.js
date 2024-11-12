@@ -1,6 +1,10 @@
 import apiService from '../shared/fetch/apiService';
 
 class BooksFacade {
+    async obtenerLibros() {
+        return await apiService.fetch(`/api/libros/`);
+    }
+
     async fetchPost(query) {
         return await apiService.fetch(`/graphql`, {
             method: 'POST',
