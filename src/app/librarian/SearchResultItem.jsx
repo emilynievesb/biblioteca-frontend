@@ -4,7 +4,7 @@ import { ArrowRightCircle } from 'lucide-react';
 const SearchResultItem = ({ board, newSelected, setInputValue, setIsOpen }) => {
 
     const handleGoToBoard = () => {
-        newSelected(board.title);
+        newSelected(board);
         setInputValue(board.title)
         setIsOpen(false)
     };
