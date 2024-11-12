@@ -66,27 +66,46 @@ class Book {
         `;
 
         this.queryFetchAll = `
-        query{
-            libro{
-                data{
+            query {
+            libros {
+                data {
+                id
+                attributes {
                     isbn
                     titulo
-                    editorial
                     idioma
                     edicion
-                    categoria
                     resumen
-                    autors{
+                    editorial {
+                    data {
                         id
-                        name
+                        attributes {
+                        nombre
+                        }
                     }
-                    libro_localidads {
+                    }
+                    categoria {
+                    data {
                         id
-                        location
-                    }   
+                        attributes {
+                        nombre
+                        }
+                    }
+                    }
+                    autors {
+                    data {
+                        id
+                        attributes {
+                        nombre
+                        apellido
+                        }
+                    }
+                    }
+
+                }
                 }
             }
-        }
+            }
         `;
     }
 

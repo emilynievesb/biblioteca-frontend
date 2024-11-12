@@ -1,17 +1,33 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Search } from 'lucide-react'
 import Modal from './Modal';
+import {searchBooks} from "../controllers/book.controller"
 
 
 const InventoryManagement = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [books, setBooks] = useState([])
 
-    const data = [
-        { isbn: "9780307474728", title: "Cien años de soledad", author: "Gabriel García Márquez", publisher: "Editorial Sudamericana", language: "Español", year: "1967", edition: "5", categories: "Drama, Realismo mágico" },
-    ]
+    const getBooks = async () => {
+        const response = await searchBooks()
+        
+        let books = response.data.libros.data.map(book => {
+            return {
+                ...book.attributes,
+                autors: book.attributes.autors.data.map(author => ({ ...author.attributes, id: author.id })),
+                categoria: { ...book.attributes.categoria.data.attributes, id: book.attributes.categoria.data.id },
+                editorial: { ...book.attributes.editorial.data.attributes, id: book.attributes.editorial.data.id },
+                id: book.id
+            }
+        })
+        setBooks(books)
+    };
 
+    useEffect(() => {
+        getBooks();
+    }, []);
     return (
         <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '0.5rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
             <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem', display: 'flex', alignItems: 'center' }}>
@@ -31,22 +47,20 @@ const InventoryManagement = () => {
                             <th className="p-2 text-left">Editorial</th>
                             <th className="p-2 text-left">Idioma</th>
                             <th className="p-2 text-left">Año</th>
-                            <th className="p-2 text-left">Edición</th>
                             <th className="p-2 text-left">Categorías</th>
                             <th className="p-2 text-left">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map(book => (
+                        {books.map(book => (
                             <tr key={book.isbn}>
                                 <td className="p-2 text-left">{book.isbn}</td>
-                                <td className="p-2 text-left">{book.title}</td>
-                                <td className="p-2 text-left">{book.author}</td>
-                                <td className="p-2 text-left">{book.publisher}</td>
-                                <td className="p-2 text-left">{book.language}</td>
-                                <td className="p-2 text-left">{book.year}</td>
-                                <td className="p-2 text-left">{book.edition}</td>
-                                <td className="p-2 text-left">{book.categories}</td>
+                                <td className="p-2 text-left">{book.titulo}</td>
+                                <td className="p-2 text-left">{`${book.autors[0].nombre} ${book.autors[0].apellido}`}</td>
+                                <td className="p-2 text-left">{book.editorial.nombre}</td>
+                                <td className="p-2 text-left">{book.idioma}</td>
+                                <td className="p-2 text-left">{book.edicion}</td>
+                                <td className="p-2 text-left">{book.categoria.nombre}</td>
                                 <td className="p-2 text-left">
                                     <button className='text-blue-600 hover:underline mr-2'>Editar</button>
                                 </td>
