@@ -10,51 +10,58 @@ class Book {
     libro_localidads;
 
     constructor() {
-        this.queryRegister = `mutation {
-            createLibro(input: {
-                data: {
-                isbn: {0},
-                titulo: {1},
-                editorial: {
-                    connect: {
-                    id: {2}
-                    }
-                },
-                idioma: {3},
-                edicion: {4},
-                categoria: {
-                    connect: {
-                    id: {5}
-                    }
-                },
-                resumen: {6},
-                autors: {
-                    connect: {7} //[ {id: "1"}, {id: "2"} ]
-                },
-                }
-            }) {
-                data {
-                id
-                isbn
-                titulo
-                editorial {
-                    id
-                    name
-                }
-                idioma
-                edicion
-                categoria {
-                    id
-                    name
-                }
-                resumen
-                autors {
-                    id
-                    name
-                }
-                }
+        this.queryRegister = `
+        mutation {
+  createLibro(
+    data: {
+      isbn:{0} #Tipo string
+      titulo:{1},
+      editorial: {2},         # Relación con la editorial por ID tipo Number
+      idioma: {3},
+      edicion: {4},
+      categoria: {5},         # Relación con la categoría por ID tipo Number
+      resumen: {6},
+      autors: {7}           # Relación múltiple con autores, usar un array para IDs
+    }
+  ) {
+    data {
+      id
+      attributes {
+        isbn
+        titulo
+        editorial {
+          data {
+            id
+            attributes {
+              nombre
             }
+          }
+        }
+        idioma
+        edicion
+        categoria {
+          data {
+            id
+            attributes {
+              nombre
             }
+          }
+        }
+        resumen
+        autors {
+          data {
+            id
+            attributes {
+              nombre
+              apellido
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
         `;
 
         this.queryFetchAll = `
@@ -129,9 +136,9 @@ class Book {
             .replace('{2}', `"${this.editorial}"`)
             .replace('{3}', `"${this.idioma}"`)
             .replace('{4}', `"${this.edicion}"`)
-            .replace('{5}', `"${this.categoria}"`)
+            .replace('{5}', `${this.categoria}`)
             .replace('{6}', `"${this.resumen}"`)
-            .replace('{7}', `"${this.autors}"`);
+            .replace('{7}', `${this.autors}`);
         // .replace('{8}', `"${this.libro_localidads}"`);
     }
 
