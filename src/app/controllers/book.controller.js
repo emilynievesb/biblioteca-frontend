@@ -17,9 +17,7 @@ const registerBook = async (data) => {
     return await bookFacade.fetchPost(queryBooks);
 };
 const searchBooks = async () => {
-    const book = new Book();
-    const queryBooks = book.buildQueryFetchAll();
     const bookFacade = new BooksFacade();
-    return await bookFacade.fetchPost(queryBooks);
+    return await bookFacade.obtenerLibros(queryBooks);
 };
 export { searchBooks, registerBook };
