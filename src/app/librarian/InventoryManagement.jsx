@@ -7,34 +7,10 @@ import Modal from './Modal';
 
 const InventoryManagement = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [newBook, setNewBook] = useState({
-        isbn: '',
-        title: '',
-        author: '',
-        publisher: '',
-        language: '',
-        year: '',
-        categories: '',
-        summary: ''
-    })
 
     const data = [
         { isbn: "9780307474728", title: "Cien años de soledad", author: "Gabriel García Márquez", publisher: "Editorial Sudamericana", language: "Español", year: "1967", edition: "5", categories: "Drama, Realismo mágico" },
     ]
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target
-        setNewBook(prevBook => ({
-            ...prevBook,
-            [name]: value
-        }))
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log('Nuevo libro:', newBook)
-        setIsModalOpen(false)
-    }
 
     return (
         <div style={{ backgroundColor: 'white', padding: '1.5rem', borderRadius: '0.5rem', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
@@ -98,9 +74,6 @@ const InventoryManagement = () => {
             <Modal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                onSubmit={handleSubmit}
-                newBook={newBook}
-                handleInputChange={handleInputChange}
             />
         </div>
     )
