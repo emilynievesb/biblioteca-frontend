@@ -1,32 +1,45 @@
-"use client"
+'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BookOpen } from 'lucide-react';
 import SearchBoardsPage from './SearchBoardsPage';
+import { searchBooks } from '@/app/controllers/book.controller';
+import { searchUsers } from '../controllers/users.controller';
 
 const LoanManagement = () => {
+    const [userList, setUserList] = useState([]);
+    const [bookList, setBookList] = useState([]);
 
-    const [user, setUser] = useState('');
-    const [book, setBook] = useState('');
+    async function fetchData() {
+        let booksResponse = await searchBooks();
+        let books = booksResponse.data.libros.data.map((book) => {
+            return {
+                id: book.id,
+                title: book.attributes.titulo,
+                author: book.attributes.isbn,
+            };
+        });
+        setBookList(books);
+
+        let usersResponse = await searchUsers();
+        let users = usersResponse.data.usuarios.data.map((user) => {
+            return {
+                id: user.id,
+                title: user.attributes.nombres,
+                author: user.attributes.apellidos,
+            };
+        });
+        setUserList(users);
+    }
 
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log(user, book);
+        console.log(userList, book);
     };
 
-    const usersList = [
-        { id: 1, title: 'Autor A', author: 'Juan Pérez' },
-        { id: 2, title: 'Autor B', author: 'María López' },
-        { id: 3, title: 'Autor C', author: 'María López' },
-        { id: 4, title: 'Autor D', author: 'María López' },
-    ]
-
-    const bookList = [
-        { id: 1, title: 'Libro A', author: 'Juan Pérez' },
-        { id: 2, title: 'Libro B', author: 'Juan Pérez' },
-        { id: 3, title: 'Libro C', author: 'Juan Pérez' },
-        { id: 4, title: 'Libro D', author: 'Juan Pérez' },
-    ]
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <article className="bg-white p-6 rounded-lg shadow-md">
@@ -35,20 +48,13 @@ const LoanManagement = () => {
                 Gestión de Préstamos y Devoluciones
             </h2>
             <form className="space-y-4">
-                <SearchBoardsPage items={usersList} placeholder={'Buscar usuario'} newSelected={setUser} inputLabel="Usuario"/>
-                <SearchBoardsPage items={bookList} placeholder={'Buscar libros'} newSelected={setBook} inputLabel="Libro"/>
+                {userList.length > 0 && <SearchBoardsPage items={userList} placeholder={'Buscar usuario'} newSelected={setUserList} inputLabel="Usuario" />}
+                {bookList.length > 0 && <SearchBoardsPage items={bookList} placeholder={'Buscar libros'} newSelected={setBookList} inputLabel="Libro" />}
                 <div className="space-x-4">
-                    <button
-                        type="submit"
-                        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-                        onClick={onSubmit}
-                    >
+                    <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onClick={onSubmit}>
                         Iniciar Préstamo
                     </button>
-                    <button
-                        type="submit"
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                    >
+                    <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                         Iniciar Devolución
                     </button>
                 </div>
