@@ -10,10 +10,10 @@ class Prestamo {
     constructor() {
         this.queryCreate = `mutation {
             createPrestamo(data: {
-              libro: "{0}",
-              id_user: "{1}",
-              fecha_inicio: "{2}",
-              fecha_pac_dev: "{3}",
+              libro: {0},
+              id_user: {1},
+              fecha_inicio: {2},
+              fecha_pac_dev: {3},
               valor_pactado_dia: {4},
             }) {
               data {

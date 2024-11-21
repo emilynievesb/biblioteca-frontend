@@ -12,6 +12,7 @@ const registerPrestamo = async (data) => {
     prestamo.setValorPactadoDia(valor_pactado_dia);
     const queryPrestamo = prestamo.buildQueryCreate();
     const prestamoFacade = new PrestamosFacade();
+    console.log(queryPrestamo)
     return await prestamoFacade.fetchPost(queryPrestamo);
 };
 const searchBooks = async () => {
