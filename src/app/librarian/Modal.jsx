@@ -7,7 +7,7 @@ import { searchEditoriales } from '../controllers/editoriales.controller';
 import { searchCategorias } from '../controllers/categorias.controller';
 import { registerBook } from '../controllers/book.controller';
 
-const Modal = ({ isOpen, onClose }) => {
+const Modal = ({ isOpen, onClose, reloadBooks }) => {
     if (!isOpen) return null;
     const [newBook, setNewBook] = useState({
         isbn: '',
@@ -112,6 +112,7 @@ const Modal = ({ isOpen, onClose }) => {
             icon: 'success',
             confirmButtonText: 'Aceptar',
         }).then(() => {
+            reloadBooks();
             onClose();
         });
     };

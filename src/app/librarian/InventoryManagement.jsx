@@ -77,17 +77,12 @@ const InventoryManagement = () => {
                 >
                     Agregar Libro
                 </button>
-                <button
-                    type="submit"
-                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                >
-                    Iniciar Devolución
-                </button>
             </div>
 
             <Modal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
+                reloadBooks={getBooks}
             />
         </div>
     )
