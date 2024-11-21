@@ -1,3 +1,4 @@
+// BUILDER
 class User {
     id;
     nomUsuario;

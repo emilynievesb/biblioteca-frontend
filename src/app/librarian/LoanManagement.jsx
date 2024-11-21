@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { BookOpen } from 'lucide-react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Swal from 'sweetalert2';
 import SearchBoardsPage from './SearchBoardsPage';
 import { searchBooks } from '@/app/controllers/book.controller';
 import { searchUsers } from '../controllers/users.controller';
@@ -49,11 +50,22 @@ const LoanManagement = () => {
             fecha_pac_dev: fechaPacDev.toISOString(),
             valor_pactado_dia: Number(valorPactadoDia)
         }
-        console.log(newPrestamoData)
-
         let response = await registerPrestamo(newPrestamoData)
 
-        console.log(response);
+        if (!response.data.createPrestamo){
+            Swal.fire({
+                title: 'Error',
+                text: 'No se pudo registrar el prestamo',
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+            });
+        }
+        Swal.fire({
+            title: 'Registro exitoso',
+            text: 'El prestamo se ha registrado correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+        });
         
     };
 

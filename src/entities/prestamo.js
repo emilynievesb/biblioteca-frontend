@@ -1,3 +1,4 @@
+// BUILDER
 class Prestamo {
     id_libro;
     id_user;
@@ -11,10 +12,11 @@ class Prestamo {
         this.queryCreate = `mutation {
             createPrestamo(data: {
               libro: {0},
-              id_user: {1},
+              usuario: {1},
               fecha_inicio: {2},
               fecha_pac_dev: {3},
               valor_pactado_dia: {4},
+              publishedAt: {5}
             }) {
               data {
                 id
@@ -27,13 +29,9 @@ class Prestamo {
                       }
                     }
                   }
-                  id_user {
+                  usuario {
                     data {
                       id
-                      attributes {
-                        username
-                        email
-                      }
                     }
                   }
                   fecha_inicio
@@ -81,7 +79,8 @@ class Prestamo {
             .replace('{1}', `"${this.id_user}"`)
             .replace('{2}', `"${new Date().toISOString()}"`)
             .replace('{3}', `"${this.fecha_pac_dev}"`)
-            .replace('{4}', `"${this.valor_pactado_dia}"`);
+            .replace('{4}', `"${this.valor_pactado_dia}"`)
+            .replace('{5}', `"${new Date().toISOString()}"`);
     }
 }
 export default Prestamo;
